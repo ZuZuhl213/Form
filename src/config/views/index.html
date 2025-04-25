@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../asset/css/style.css">
+  <title>Đăng kí thông tin</title>
+</head>
+<body>
+  <header>
+    <h1>Đăng kí thông tin</h1>
+  </header>
+
+  <main>
+    <form action="../controllers/process.php" method="POST">
+      <!-- Họ và tên -->
+      <div class="formrow">
+        <div class="formgroup">
+          <label class="label" for="ho">Họ</label>
+          <input type="text" id="ho" name="ho" placeholder="Nhập họ của bạn" required>
+        </div>
+        <div class="formgroup">
+          <label class="label" for="ten">Tên</label>
+          <input type="text" id="ten" name="ten" placeholder="Nhập tên của bạn" required>
+        </div>
+      </div>
+
+      <!-- Mật khẩu -->
+      <div class="formgroup">
+        <label class="label" for="password">Mật khẩu</label>
+        <input type="password" id="password" name="password" placeholder="Nhập mật khẩu của bạn" required>
+      </div>
+
+      <!-- Email -->
+      <div class="formgroup">
+        <label class="label" for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Nhập email của bạn" required>
+      </div>
+
+      <!-- Ngày sinh - Giới tính - Thành phố -->
+      <div class="formrow-inline">
+        <div class="formgroup-namngang">
+            <label for="dob">Ngày sinh:</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+          
+
+        <div class="formgroup">
+          <div class="gender-options">
+            <label class="label">Giới tính:</label>
+            <input type="radio" id="male" name="gender" value="Nam" required>
+            <label for="male">Nam</label>
+            <input type="radio" id="female" name="gender" value="Nữ" required>
+            <label for="female">Nữ</label>
+            <input type="radio" id="other" name="gender" value="Khác" required>
+            <label for="other">Khác</label>
+          </div>
+        </div>
+
+        <div class="formgroup-namngang">
+          <label class="label" for="city">Thành phố:</label>
+          <select id="city" name="city" required>
+            <option value="" disabled selected>Chọn thành phố</option>
+            <option value="Hà Nội">Hà Nội</option>
+            <option value="TP HCM">TP HCM</option>
+            <option value="Hưng Yên">Hưng Yên</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Sở thích -->
+      <div class="formgroup">
+        <div class="checkbox-group">
+            <label class="label">Sở thích</label>A
+          <div>
+            <input type="checkbox" id="hobby1" name="hobbies[]" value="Đọc sách">
+            <label for="hobby1">Đọc sách</label>
+          </div>
+          <div>
+            <input type="checkbox" id="hobby2" name="hobbies[]" value="Nghe nhạc">
+            <label for="hobby2">Nghe nhạc</label>
+          </div>
+          <div>
+            <input type="checkbox" id="hobby3" name="hobbies[]" value="Xem phim">
+            <label for="hobby3">Xem phim</label>
+          </div>
+          <div>
+            <input type="checkbox" id="hobby4" name="hobbies[]" value="Bóng đá">
+            <label for="hobby4">Bóng đá</label>
+          </div>
+          <div>
+            <input type="checkbox" id="hobby5" name="hobbies[]" value="Cầu lông">
+            <label for="hobby5">Cầu lông</label>
+          </div>
+        </div>
+      </div>
+      
+      <div class = "formgroup">
+        <label for = "description">Mô tả bản thân:</label>
+        <textarea id="description" name="description" rows="4" cols="50" placeholder="Nhập mô tả về bản thân"></textarea>
+      </div>
+      <!-- Nút gửi -->
+      <div class="btn-group" style="margin-top: 20px;">
+        <button type="button" class="submit-btn" onclick="showPreview()">Xem lại thông tin</button>
+        <button type="reset" class="reset-btn">Làm lại</button>
+      </div>
+
+      <!-- Nút đăng nhập -->
+      <div class="btn-group" style="margin-top: 20px;">
+        <button type="button" class="submit-btn" onclick="window.location.href='login.html'">Đăng nhập</button>
+      </div>
+
+      <!-- Bảng thông tin xác nhận -->
+      <div id="preview" style="display: none; margin-top: 20px; border: 1px solid #ccc; padding: 10px;">
+        <h3>Xác nhận thông tin</h3>
+        <p><strong>Họ:</strong> <span id="preview-ho"></span></p>
+        <p><strong>Tên:</strong> <span id="preview-ten"></span></p>
+        <p><strong>Email:</strong> <span id="preview-email"></span></p>
+        <p><strong>Ngày sinh:</strong> <span id="preview-dob"></span></p>
+        <p><strong>Giới tính:</strong> <span id="preview-gender"></span></p>
+        <p><strong>Thành phố:</strong> <span id="preview-city"></span></p>
+        <p><strong>Sở thích:</strong> <span id="preview-hobbies"></span></p>
+        <p><strong>Mô tả:</strong> <span id="preview-description"></span></p>
+        <button type="button" onclick="confirmSubmit()">Xác nhận</button>
+        <button type="button" onclick="editInfo()">Chỉnh sửa</button>
+      </div>
+
+      <script>
+        function showPreview() {
+          // Lấy dữ liệu từ các trường
+          const ho = document.getElementById("ho").value;
+          const ten = document.getElementById("ten").value;
+          const email = document.getElementById("email").value;
+          const dob = document.getElementById("dob").value;
+          const gender = document.querySelector('input[name="gender"]:checked')?.value;
+          const city = document.getElementById("city").value;
+          const hobbies = Array.from(document.querySelectorAll('input[name="hobbies[]"]:checked')).map(hobby => hobby.value).join(", ");
+          const description = document.getElementById("description").value;
+      
+          // Hiển thị thông tin trong bảng xác nhận
+          document.getElementById("preview-ho").textContent = ho || "Chưa nhập";
+          document.getElementById("preview-ten").textContent = ten || "Chưa nhập";
+          document.getElementById("preview-email").textContent = email || "Chưa nhập";
+          document.getElementById("preview-dob").textContent = dob || "Chưa nhập";
+          document.getElementById("preview-gender").textContent = gender || "Chưa chọn";
+          document.getElementById("preview-city").textContent = city || "Chưa chọn";
+          document.getElementById("preview-hobbies").textContent = hobbies || "Không có";
+          document.getElementById("preview-description").textContent = description || "Không có";
+      
+          // Hiển thị bảng xác nhận và ẩn biểu mẫu
+          document.getElementById("preview").style.display = "block";
+        }
+      
+        function confirmSubmit() {
+          // Gửi biểu mẫu
+          document.querySelector("form").submit();
+        }
+      
+        function editInfo() {
+          // Ẩn bảng xác nhận để quay lại chỉnh sửa
+          document.getElementById("preview").style.display = "none";
+        }
+      </script>
+
+    </form>
+  </main>
+</body>
+</html>
