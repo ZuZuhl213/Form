@@ -96,8 +96,8 @@
       </div>
       
       <div class = "formgroup">
-        <label for = "description">Mô tả bản thân:</label>
-        <textarea id="description" name="description" rows="4" cols="50" placeholder="Nhập mô tả về bản thân"></textarea>
+        <label for = "bio">Mô tả bản thân:</label>
+        <textarea id="bio" name="bio" rows="4" cols="50" placeholder="Nhập mô tả về bản thân"></textarea>
       </div>
       <!-- Nút gửi -->
       <div class="btn-group" style="margin-top: 20px;">
@@ -107,9 +107,8 @@
 
       <!-- Nút đăng nhập -->
       <div class="btn-group" style="margin-top: 20px;">
-        <button type="button" class="submit-btn" onclick="window.location.href='login.html'">Đăng nhập</button>
+        <button type="button" class="submit-btn" onclick="window.location.href='Login.html'">Đăng nhập</button>
       </div>
-
       <!-- Bảng thông tin xác nhận -->
       <div id="preview" style="display: none; margin-top: 20px; border: 1px solid #ccc; padding: 10px;">
         <h3>Xác nhận thông tin</h3>
@@ -120,7 +119,7 @@
         <p><strong>Giới tính:</strong> <span id="preview-gender"></span></p>
         <p><strong>Thành phố:</strong> <span id="preview-city"></span></p>
         <p><strong>Sở thích:</strong> <span id="preview-hobbies"></span></p>
-        <p><strong>Mô tả:</strong> <span id="preview-description"></span></p>
+        <p><strong>Mô tả:</strong> <span id="preview-bio"></span></p>
         <button type="button" onclick="confirmSubmit()">Xác nhận</button>
         <button type="button" onclick="editInfo()">Chỉnh sửa</button>
       </div>
@@ -135,7 +134,7 @@
           const gender = document.querySelector('input[name="gender"]:checked')?.value;
           const city = document.getElementById("city").value;
           const hobbies = Array.from(document.querySelectorAll('input[name="hobbies[]"]:checked')).map(hobby => hobby.value).join(", ");
-          const description = document.getElementById("description").value;
+          const bio = document.getElementById("bio").value;
       
           // Hiển thị thông tin trong bảng xác nhận
           document.getElementById("preview-ho").textContent = ho || "Chưa nhập";
@@ -145,7 +144,7 @@
           document.getElementById("preview-gender").textContent = gender || "Chưa chọn";
           document.getElementById("preview-city").textContent = city || "Chưa chọn";
           document.getElementById("preview-hobbies").textContent = hobbies || "Không có";
-          document.getElementById("preview-description").textContent = description || "Không có";
+          document.getElementById("preview-bio").textContent = bio || "Không có";
       
           // Hiển thị bảng xác nhận và ẩn biểu mẫu
           document.getElementById("preview").style.display = "block";

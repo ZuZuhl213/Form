@@ -1,4 +1,3 @@
-<!-- filepath: c:\xampp\htdocs\Form\src\config\views\edit_info.php -->
 <?php
 session_start();
 include '../../config/db.php';
@@ -53,27 +52,56 @@ if ($result->num_rows > 0) {
             </div>
             <div class="formgroup">
                 <label class="label" for="dob">Ngày sinh</label>
-                <input type="date" id="dob" name="dob" value="<?php echo htmlspecialchars($user['dob']); ?>" required>
+                <input type="date" id="dob" name="dob" value="<?php echo htmlspecialchars($user['birth']); ?>" required>
             </div>
             <div class="formgroup">
-                <label class="label" for="gender">Giới tính</label>
-                <select id="gender" name="gender" required>
-                    <option value="Nam" <?php echo $user['gender'] === 'Nam' ? 'selected' : ''; ?>>Nam</option>
-                    <option value="Nữ" <?php echo $user['gender'] === 'Nữ' ? 'selected' : ''; ?>>Nữ</option>
-                    <option value="Khác" <?php echo $user['gender'] === 'Khác' ? 'selected' : ''; ?>>Khác</option>
+                <div class="gender-options">
+                    <label class="label">Giới tính:</label>
+                    <input type="radio" id="male" name="gender" value="Nam" <?php echo $user['gender'] === 'Nam' ? 'checked' : ''; ?> required>
+                    <label for="male">Nam</label>
+                    <input type="radio" id="female" name="gender" value="Nữ" <?php echo $user['gender'] === 'Nữ' ? 'checked' : ''; ?> required>
+                    <label for="female">Nữ</label>
+                    <input type="radio" id="other" name="gender" value="Khác" <?php echo $user['gender'] === 'Khác' ? 'checked' : ''; ?> required>
+                    <label for="other">Khác</label>
+                </div>
+            </div>
+            <div class="formgroup-namngang">
+                <label class="label" for="city">Thành phố:</label>
+                <select id="city" name="city" required>
+                    <option value="" disabled <?php echo empty($user['city']) ? 'selected' : ''; ?>>Chọn thành phố</option>
+                    <option value="Hà Nội" <?php echo $user['city'] === 'Hà Nội' ? 'selected' : ''; ?>>Hà Nội</option>
+                    <option value="TP HCM" <?php echo $user['city'] === 'TP HCM' ? 'selected' : ''; ?>>TP HCM</option>
+                    <option value="Hưng Yên" <?php echo $user['city'] === 'Hưng Yên' ? 'selected' : ''; ?>>Hưng Yên</option>
                 </select>
             </div>
             <div class="formgroup">
-                <label class="label" for="city">Thành phố</label>
-                <input type="text" id="city" name="city" value="<?php echo htmlspecialchars($user['city']); ?>" required>
+                <div class="checkbox-group">
+                    <label class="label">Sở thích</label>
+                    <div>
+                        <input type="checkbox" id="hobby1" name="hobbies[]" value="Đọc sách" <?php echo in_array('Đọc sách', explode(',', $user['hobbie'])) ? 'checked' : ''; ?>>
+                        <label for="hobby1">Đọc sách</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="hobby2" name="hobbies[]" value="Nghe nhạc" <?php echo in_array('Nghe nhạc', explode(',', $user['hobbie'])) ? 'checked' : ''; ?>>
+                        <label for="hobby2">Nghe nhạc</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="hobby3" name="hobbies[]" value="Xem phim" <?php echo in_array('Xem phim', explode(',', $user['hobbie'])) ? 'checked' : ''; ?>>
+                        <label for="hobby3">Xem phim</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="hobby4" name="hobbies[]" value="Bóng đá" <?php echo in_array('Bóng đá', explode(',', $user['hobbie'])) ? 'checked' : ''; ?>>
+                        <label for="hobby4">Bóng đá</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="hobby5" name="hobbies[]" value="Cầu lông" <?php echo in_array('Cầu lông', explode(',', $user['hobbie'])) ? 'checked' : ''; ?>>
+                        <label for="hobby5">Cầu lông</label>
+                    </div>
+                </div>
             </div>
             <div class="formgroup">
-                <label class="label" for="hobbies">Sở thích</label>
-                <textarea id="hobbies" name="hobbies" rows="3"><?php echo htmlspecialchars($user['hobbies']); ?></textarea>
-            </div>
-            <div class="formgroup">
-                <label class="label" for="description">Mô tả bản thân</label>
-                <textarea id="description" name="description" rows="4"><?php echo htmlspecialchars($user['description']); ?></textarea>
+                <label for="bio">Mô tả bản thân:</label>
+                <textarea id="bio" name="bio" rows="4" cols="50" placeholder="Nhập mô tả về bản thân"><?php echo htmlspecialchars($user['bio']); ?></textarea>
             </div>
             <div class="formgroup">
                 <label class="label" for="password">Mật khẩu mới</label>
